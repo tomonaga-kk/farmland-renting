@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->integer('user_type')->default(1);  //0：管理者、1：一般ユーザ
+            $table->text('one_word_message')->nullable();
             $table->timestamps();
         });
     }

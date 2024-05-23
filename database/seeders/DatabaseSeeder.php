@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\User;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,5 +20,14 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        
+        // 操作用ユーザ作成
+        $this->call([UsersTableSeeder::class]);
+        
+        // その他ユーザを大量に作成
+        User::factory()->count(100)->create();
+        
+        // 操作用ユーザに投稿を作成する
+        $this->call([PostsTableSeeder::class]);
     }
 }
