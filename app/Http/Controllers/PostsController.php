@@ -51,7 +51,7 @@ class PostsController extends Controller
         
         
         // DBに保存
-        Post::create([
+        $post = Post::create([
             'user_id'           => Auth::user()->id,
             'title'             => $request->title,
             'place'             => $request->place,
@@ -61,7 +61,8 @@ class PostsController extends Controller
             'img_name'          => $path,
         ]);
         
-        return redirect(route('posts.index'));
+        
+        return redirect()->route('posts.show', $post->id);
     }
 
 

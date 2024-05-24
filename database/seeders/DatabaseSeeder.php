@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call([UsersTableSeeder::class]);
         
         // その他ユーザを大量に作成
-        User::factory()->count(100)->create();
+        User::factory()->count(18)->create();
         
         // 操作用ユーザに投稿を作成する
         $this->call([PostsTableSeeder::class]);
