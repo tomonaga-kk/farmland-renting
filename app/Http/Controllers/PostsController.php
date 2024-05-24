@@ -15,6 +15,9 @@ class PostsController extends Controller
         // $posts = Post::all();
         $posts = Post::orderBy('id', 'desc')->paginate(10);
         
+        // 関係するモデルの件数をロード
+        // $posts->loadRelationshipCounts();  // ⇐indexアクションではうまく動かせなかった。。
+        
         return view('posts.index', [
             'posts' => $posts,
         ]);

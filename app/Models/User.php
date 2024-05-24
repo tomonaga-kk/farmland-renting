@@ -30,7 +30,20 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     
+    // 紐づくレコード数を取得するメソッド
+    public function loadRelationshipCounts(){
+        $this->loadCount(['posts', 'likeposts']);
+        // $this->loadCount(['メソッド1', 'メソッド2']);  // リレーションのメソッド名を記載する
+    }
+    
+    // 1対多のリレーション
     public function posts(){
         return $this->hasMany(Post::class);
+    }
+    
+    // 多対多のリレーション
+    public function likePosts(){
+        return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id')->withTimestamps();
+        // $this->belongsToMany(関係先モデル名::class, '中間テーブル名', '中間テーブルの自分のカラム', '中間テーブルの関係先カラム'
     }
 }

@@ -16,7 +16,7 @@
 @section('content')
 
     @auth
-        <section >
+        <section>
             <h2 class="mb-5 text-center">投稿一覧</h2>
             
             <div class="my-5 mx-auto text-end" style="max-width: 980px; width:80%;">
@@ -24,69 +24,8 @@
             </div>
             
             
-            
-            <div class="row justify-content-center">
-                @foreach($posts as $post)
-                
-                  <div class="card mb-3 p-0" style="max-width: 980px; width:80%;">
-                    <div class="row g-0">
-                      
-                      <div class="col-md-5">
-                        <img src="{{asset($post->img_name)}}" class="img-fluid rounded-start object-fit-cover h-100" alt="投稿サムネイル" style="filter:brightness(100%); saturate(200%);">
-                      </div>
-                      
-                      <div class="col-md-7">
-                        <div class="card-body h-100">
-                          
-                          <div class="container text-center h-100">
-                            
-                            <div class="row border-bottom align-items-center" style="height:33%;">
-                              <div class="col-8">
-                                <p class="card-title">
-                                  <a href="{{route('posts.show', $post->id)}}">
-                                    {{$post->title}}
-                                  </a>
-                                </p>
-                              </div>
-                              <div class="col-4 border-start">
-                                <p class="card-text">
-                                  <a href="{{route('users.show', $post->user_id)}}">
-                                    {{$post->user()->first()->name}}
-                                  </a>
-                                </p>
-                              </div>
-                            </div>
-                            
-                            <div class="row border-bottom align-items-center" style="height:33%;">
-                              <div class="col">
-                                <p class="card-text">{{$post->place}}</p>
-                              </div>
-                            </div>
-                            
-                            <div class="row align-items-center" style="height:33%;">
-                              <div class="col">
-                                <p class="card-text">{{number_format($post->price_by_month)}}円</p>
-                              </div>
-                              <div class="col border-start">
-                                <p class="card-text"><small class="text-body-secondary">{{number_format($post->size_of_area)}}㎡</small></p>
-                              </div>
-                            </div>
-                            
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-                
-                @endforeach
-                
-                <div class="mt-5 d-flex justify-content-center">
-                    {{$posts->links()}} 
-                </div>
-                
-            </div>
-            
+            {{-- 投稿一覧　　※「, ['posts' => $posts]」は記述不要だが、コンポーネント内で使う変数を明示している--}}
+            @include('posts.comp_posts_list', ['posts' => $posts])
         </section>
         
         

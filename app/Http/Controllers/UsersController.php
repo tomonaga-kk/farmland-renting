@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use App\Models\Post;
 
 class UsersController extends Controller
 {
@@ -14,6 +15,7 @@ class UsersController extends Controller
         // $users = User::all();
         $users = User::orderBy('id', 'asc')->paginate(10);
         
+    
         return view('users.index', [
             'users' => $users,
         ]);
@@ -24,10 +26,36 @@ class UsersController extends Controller
 
     public function show(string $id)
     {
+        // ユーザデータ取得
         $user = User::findOrFail($id);
+        
+        // 関係するモデルの件数をロード
+        $user->loadRelationshipCounts();
+        
+        // お気に入り投稿データ取得
+        $likePostsIds = $user->likePosts()->pluck('posts.id')->toArray();
+        $myPosts = $user->posts()->orderBy('id', 'asc')->paginate(5);
         
         return view('users.show', [
             'user' => $user,
+            'posts'=> $myPosts,
+        ]);
+    }
+    
+    public function show_likes(string $id){
+        // ユーザデータ取得
+        $user = User::findOrFail($id);
+        
+        // 関係するモデルの件数をロード
+        $user->loadRelationshipCounts();
+        
+        // お気に入り投稿データ取得
+        $likePostsIds = $user->likePosts()->pluck('posts.id')->toArray();
+        $likePosts = Post::whereIn('id', $likePostsIds)->paginate(5);
+        
+        return view('users.show', [
+            'user' => $user,
+            'posts'=> $likePosts,
         ]);
     }
 
