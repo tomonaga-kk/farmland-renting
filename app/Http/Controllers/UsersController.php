@@ -87,7 +87,7 @@ class UsersController extends Controller
         // バリデーション
         $request->validate([
             'name'              => 'required|string|max:30',
-            'email'             => 'required|unique:users|email',
+            'email'             => 'required|email',
             'one_word_message'  => 'string|max:300',
         ]);
         
@@ -98,9 +98,8 @@ class UsersController extends Controller
         $user->one_word_message = $request->one_word_message;
         $user->save();
         
-        return view('users.show', [
-            'user' => $user,
-        ]);
+        
+        return redirect()->route('users.show', $user->id);
     }
 
     public function destroy(string $id)

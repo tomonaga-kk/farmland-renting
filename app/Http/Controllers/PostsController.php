@@ -44,7 +44,7 @@ class PostsController extends Controller
         
         // 画像を格納　※格納先：/storage/app/public/任意のフォルダ名
         $dir = 'post_img';  // 画像格納フォルダ名
-        $path = $request->file('img_name')->store('public/' . $dir);
+        $path = $request->file('img_name')?->store('public/' . $dir);
         
         // パスの書き替え（画像呼び出す時のためにパスを書き換えておく）
         $path = str_replace('public/', 'storage/', $path);
@@ -108,15 +108,20 @@ class PostsController extends Controller
         if(Auth::user()->id != $post->user_id && Auth::user()->user_type != 0){
             return back();
         }
-    
+
+        if($request->file('img_name') != null){
+            
+            // 画像を格納　※格納先：/storage/app/public/任意のフォルダ名
+            $dir = 'post_img';  // 画像格納フォルダ名
+            $path = $request->file('img_name')?->store('public/' . $dir);
+            
+            // パスの書き替え（画像呼び出す時のためにパスを書き換えておく）
+            $path = str_replace('public/', 'storage/', $path);
+        }else{
+            // 画像が変更されていなければ元の画像を再度格納
+            $path = $post->img_name;
+        }
         
-        
-        // 画像を格納　※格納先：/storage/app/public/任意のフォルダ名
-        $dir = 'post_img';  // 画像格納フォルダ名
-        $path = $request->file('img_name')->store('public/' . $dir);
-        
-        // パスの書き替え（画像呼び出す時のためにパスを書き換えておく）
-        $path = str_replace('public/', 'storage/', $path);
         
         $post->update([
             'user_id'           => Auth::user()->id,
@@ -128,15 +133,20 @@ class PostsController extends Controller
             'img_name'          => $path,
         ]);
         
-        return redirect(route('posts.show', $post->id));
+        return redirect()->route('posts.show', $post->id);
     }
 
 
     public function destroy(string $id)
     {
+        $post = Post::findOrFail($id);
+        
         // 他人の投稿は編集させない（管理者を除く）
         if(Auth::user()->id != $post->user_id && Auth::user()->user_type != 0){
             return back();
         }
+        
+        $post->delete();
+        return redirect()->route('users.show', $post->user_id);
     }
 }
