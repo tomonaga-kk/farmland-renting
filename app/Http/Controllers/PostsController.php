@@ -12,14 +12,29 @@ class PostsController extends Controller
 {
     public function index()
     {
-        // $posts = Post::all();
-        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $params = $_GET;
+        if(in_array("send", $_GET)){
+            // 検索フォームからのhttpリクエストの場合の処理
+            $posts = Post::where('title',           'like',     "%{$_GET['title']}%")
+                        ->where('place',            'like',     "%{$_GET['place']}%")
+                        ->where('size_of_area',     '>=',       ($_GET['size_of_area_min']   != "") ? $_GET['size_of_area_min']   : 0  )
+                        ->where('size_of_area',     '<=',       ($_GET['size_of_area_max']   != "") ? $_GET['size_of_area_max']   : 100000000)
+                        ->where('price_by_month',   '>=',       ($_GET['price_by_month_min'] != "") ? $_GET['price_by_month_min'] : 0  )
+                        ->where('price_by_month',   '<=',       ($_GET['price_by_month_max'] != "") ? $_GET['price_by_month_min'] : 100000000)
+                        ->where('one_word_message', 'like',     "%{$_GET['one_word_message']}%")
+                        ->paginate(10);
+        }else{
+            $posts = Post::orderBy('id', 'desc')->paginate(10);
+        }
+        
+        
         
         // 関係するモデルの件数をロード
         // $posts->loadRelationshipCounts();  // ⇐indexアクションではうまく動かせなかった。。
         
         return view('posts.index', [
             'posts' => $posts,
+            'params' => $params,
         ]);
     }
 

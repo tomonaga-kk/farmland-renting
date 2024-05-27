@@ -1,7 +1,15 @@
-<div class="row justify-content-center">
+<div class="mb-5 mx-auto row" style="max-width: 980px; width:80%;">
+
+    <h3 id="target" class="border-bottom">検索フォーム：{{$posts->total()}}件</h3>
+      
+    {{-- 新規投稿ボタン --}}
+    <div class="my-3 px-0 text-end">
+      <a href="{{route('posts.create')}}" class="px-5 m-0 btn btn-primary">投稿作成</a>
+    </div>
+    
     @foreach($posts as $post)
     
-      <div class="card mb-3 p-0" style="max-width: 980px; width:80%;">
+      <div class="card mb-3 p-0">
         <div class="row g-0">
           
           {{-- カード左側 --}}
@@ -53,12 +61,12 @@
                         <form action="{{ route('likes.destroy', $post->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <input class="btn" type="submit" value="★">
+                          <input id="unlikeButton" class="btn" type="submit" value="★">
                         </form>
                     @else
                         <form action="{{ route('likes.store', $post->id) }}" method="POST">
                           @csrf
-                          <input class="btn" type="submit" value="☆">
+                          <input id="likeButton" class="btn" type="submit" value="☆">
                         </form>
                     @endif
                     
@@ -78,7 +86,7 @@
           </div>
         </div>
       </div>
-    
+      
     @endforeach
     
     <div class="mt-5 d-flex justify-content-center">

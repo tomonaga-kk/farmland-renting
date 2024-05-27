@@ -18,11 +18,9 @@
     @auth
         <section>
             <h2 class="mb-5 text-center">投稿一覧</h2>
-            
-            <div class="my-5 mx-auto text-end" style="max-width: 980px; width:80%;">
-              <a href="{{route('posts.create')}}" class="btn btn-primary">投稿作成</a>
-            </div>
-            
+            　
+            {{-- 検索フォーム --}}
+            @include('posts.comp_search')
             
             {{-- 投稿一覧　　※「, ['posts' => $posts]」は記述不要だが、コンポーネント内で使う変数を明示している--}}
             @include('posts.comp_posts_list', ['posts' => $posts])

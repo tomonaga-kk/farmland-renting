@@ -13,6 +13,7 @@ class LikesController extends Controller
         $post->like();
         
         return back();
+        // return 'success!';
     }
     
     public function destroy(string $post_id){
@@ -20,5 +21,6 @@ class LikesController extends Controller
         $post->unlike();
         
         return back();
+        // return 'success!';
     }
 }
