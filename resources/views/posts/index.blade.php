@@ -18,7 +18,7 @@
     @auth
         <section>
             <h2 class="mb-5 text-center">投稿一覧</h2>
-            　
+            
             {{-- 検索フォーム --}}
             @include('posts.comp_search')
             

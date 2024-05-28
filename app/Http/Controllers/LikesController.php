@@ -9,18 +9,33 @@ use App\Models\Post;
 class LikesController extends Controller
 {
     public function store(string $post_id){
+        
         $post = Post::findOrFail($post_id);
         $post->like();
         
-        return back();
-        // return 'success!';
+        // 関係するモデルの件数をロード
+        $post->loadRelationshipCounts();
+        $likeCount = $post->likeusers_count;
+        
+        // return back();
+        return [
+            'likeCount' => $likeCount,
+        ];
     }
     
     public function destroy(string $post_id){
         $post = Post::findOrFail($post_id);
         $post->unlike();
         
-        return back();
-        // return 'success!';
+        // 関係するモデルの件数をロード
+        $post->loadRelationshipCounts();
+        $likeCount = $post->likeusers_count;
+        
+        // return back();
+        return [
+            'likeCount' => $likeCount,
+        ];
     }
 }
+
+
