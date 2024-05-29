@@ -20,7 +20,7 @@ class PostsController extends Controller
                         ->where('size_of_area',     '>=',       ($_GET['size_of_area_min']   != "") ? $_GET['size_of_area_min']   : 0  )
                         ->where('size_of_area',     '<=',       ($_GET['size_of_area_max']   != "") ? $_GET['size_of_area_max']   : 100000000)
                         ->where('price_by_month',   '>=',       ($_GET['price_by_month_min'] != "") ? $_GET['price_by_month_min'] : 0  )
-                        ->where('price_by_month',   '<=',       ($_GET['price_by_month_max'] != "") ? $_GET['price_by_month_min'] : 100000000)
+                        ->where('price_by_month',   '<=',       ($_GET['price_by_month_max'] != "") ? $_GET['price_by_month_max'] : 100000000)
                         ->where('one_word_message', 'like',     "%{$_GET['one_word_message']}%")
                         ->paginate(10);
         }else{

@@ -17,7 +17,6 @@ class LikesController extends Controller
         $post->loadRelationshipCounts();
         $likeCount = $post->likeusers_count;
         
-        // return back();
         return [
             'likeCount' => $likeCount,
         ];
@@ -31,7 +30,6 @@ class LikesController extends Controller
         $post->loadRelationshipCounts();
         $likeCount = $post->likeusers_count;
         
-        // return back();
         return [
             'likeCount' => $likeCount,
         ];

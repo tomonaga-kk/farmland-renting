@@ -24,7 +24,7 @@
         <h2 class="mb-5 text-center">{{$post->title}}</h2>
         
         <div class="mx-auto mb-5 w-50 text-center">
-            <img src="{{asset($post->img_name)}}" class="img-fluid rounded-start object-fit-contain" alt="投稿サムネイル" style="filter:brightness(100%); saturate(200%);">
+            <img src="{{asset($post->img_name)}}" class="img-fluid rounded object-fit-contain" alt="投稿サムネイル" style="filter:brightness(100%); saturate(200%);">
         </div>
         
         <table class="mx-auto w-75 table">
